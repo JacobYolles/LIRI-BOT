@@ -36,17 +36,17 @@ var spotify = new Spotify(keys.spotify);
 
 // Create an overarching command shell for command input
 
-function processCommands(command, commandParam)
+function processCommands(command, commandParam) {
 
 // console.log(commandParam);
 switch(command){
     // Run the concert this functionality
-    case "concert-this":
-    //if the user does not pick a concert, use my var for default concert.
-    if (commandParam === undefined) {
-        commandParam === defaultConcert;
-    }
-
+    // case "concert-this":
+    // //if the user does not pick a concert, use my var for default concert.
+    // if (commandParam === undefined) {
+    //     commandParam === defaultConcert;
+    // }
+    // concertThis(commandParam); break;
 
     // Run the spotify this song functionality.
     case "spotify-this-song":
@@ -76,6 +76,11 @@ switch(command){
 		console.log("Invalid command. Please type any of the following commands: 1. spotify-this-song 2. movie-this or 3. do-what-it-says");
 
 }// End tag for the switch command.
+
+
+}// end tag for the function command from process commands.
+
+
 
 function spotifyThisSong(song) {
     // First setting a variable for if the user skips or doesn't enter a song to be my default of Seals' kiss from a rose song.
