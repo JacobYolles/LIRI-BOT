@@ -18,6 +18,7 @@ var commandParam = process.arv[3];  // This is the specific function or song par
 var defaultMovie = "Ghostbusters"
 var defaultSong = "Kiss from a rose"
 var spotify = new Spotify(keys.spotify);
+
 // var undefined = undefined
 
 
@@ -30,12 +31,13 @@ var spotify = new Spotify(keys.spotify);
 
 
 
-/////////////////////////////////////////////////////////////////// Create Functions ////////////////////////////////////////////////////s
+/////////////////////////////////////////////////////////////////// Create Functions ////////////////////////////////////////////////////
 
 // Create an overarching command shell for command input
 
 function processCommands(command, commandParam)
 
+// console.log(commandParam);
 switch (command) {
 
     // Run the spotify this song functionality.
@@ -67,3 +69,40 @@ switch (command) {
 
 }// End tag for the switch command.
 
+function spotifyThisSong(song) {
+    // First setting a variable for if the user skips or doesn't enter a song to be my default of Seals' kiss from a rose song.
+    if (song === "") {
+        song = "Kiss from a rose";
+    } // end tag for the first if.
+
+    spotify.search({ type: 'track', query: song}, function(err, data) {
+        if (err) {
+            console.log('Error occurred: ' + err);
+            return;
+        }
+    
+        var song = data.tracks.items[0];
+        console.log("------Artists-----");
+        for(i=0; i<song.artists.length; i++){
+            console.log(song.artists[i].name);
+        }
+    
+        console.log("------Song Name-----");
+        console.log(song.name);
+    
+        console.log("-------Preview Link-----");
+        console.log(song.preview_url);
+    
+        console.log("-------Album-----");
+        console.log(song.album.name);
+    
+        }); // End tag for the spotify.search functionality.
+
+}// end tag for the function spotifythis song command.
+
+
+
+/////////////////////////////////////////////////////////////////// Main run Callback Function ////////////////////////////////////////////////////
+
+
+processCommands(inputCommand, commandParam);
