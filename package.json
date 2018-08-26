@@ -2,25 +2,26 @@
   "name": "liri-node-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JacobYolles/LIRI-BOT.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JacobYolles/LIRI-BOT/issues"
-  },
-  "homepage": "https://github.com/JacobYolles/LIRI-BOT#readme",
+  "main": "keys.js",
   "dependencies": {
     "dotenv": "^6.0.0",
     "moment": "^2.22.2",
     "node-spotify-api": "^1.0.7",
     "request": "^2.88.0"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JacobYolles/liri-node-app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JacobYolles/liri-node-app/issues"
+  },
+  "homepage": "https://github.com/JacobYolles/liri-node-app#readme"
 }
