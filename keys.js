@@ -3,14 +3,6 @@
 console.log('this is loaded');
 
 exports.spotify = {
-  id: "bc3af9e2e6df455b980dcfb99e40eca9",
-  secret: "6a1f171a0c3443bda2daae2e6b24cda7"
-};
-
-
-exports.spotifyKeys = {
-
-  ClientID: bc3af9e2e6df455b980dcfb99e40eca9,
-  ClientSecret: a1f171a0c3443bda2daae2e6b24cda7
-  
+  id: process.env.SPOTIFY_ID,
+  secret: process.env.SPOTIFY_SECRET
 };
