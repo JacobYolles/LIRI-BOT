@@ -5,7 +5,7 @@
 require("dotenv").config();
 // var inquirer = require("inquirer");
 var Spotify = require('node-spotify-api');;  // Spotify
-var request = require("request");  // Movies
+var request = require("request"); // Movies
 var fs = require("fs"); // File Structure
 var keys = require("./keys.js");    // Keys file for all consumer and secret keys.
 var spotify = new Spotify(keys.spotify);
@@ -15,8 +15,9 @@ var spotify = new Spotify(keys.spotify);
 ////////////////////////////////////////////////////////// Creating all requires:(Variables)////////////////////////////////////////////////////
 var inputCommand = process.argv[2]; // This is the switch function to initate what it is the user wants to do function wise. AKA Spotify etc.
 var commandParam = process.argv[3];  // This is the specific function or song part that the user wants after they are inside the application.
-var defaultMovie = "Ghostbusters"
+var defaultMovie = "Mr+Nobody"
 var defaultSong = "Kiss from a rose"
+var defaultConcert = "Seal"
 // var defaultConcert = "Neil Diamond"
 
 
@@ -41,12 +42,12 @@ function processCommands(command, commandParam) {
 // console.log(commandParam);
 switch(command){
     // Run the concert this functionality
-    // case "concert-this":
+    case "concert-this":
     // //if the user does not pick a concert, use my var for default concert.
-    // if (commandParam === undefined) {
-    //     commandParam === defaultConcert;
-    // }
-    // concertThis(commandParam); break;
+    if (commandParam === undefined) {
+        commandParam === defaultConcert;
+    }
+    concertThis(commandParam); break;
 
     // Run the spotify this song functionality.
     case "spotify-this-song":
@@ -92,8 +93,8 @@ switch(command){
 function spotifyThisSong(song) {
     var song = process.argv.slice(3);
     // First setting a variable for if the user skips or doesn't enter a song to be my default of Seals' kiss from a rose song.
-    if (song === "") {
-        song = "Kiss+from+a+rose";
+    if (process.argv.slice(3) === {}); {
+        song = defaultSong;
     } // end tag for the first if.
 
     
@@ -127,11 +128,50 @@ function spotifyThisSong(song) {
 
 ////////////////////////////////////////////////////// MOVIE: //////////////////////////////////////////////////////////////////////////////
 //Create the movie command
+
+
 function movieThis(movieName){
-    movieName = process.argv.slice(3);
+    var movieName = process.argv.slice(3);
+
+    if (process.argv.slice(3) === {}); {
+        movieName = defaultMovie;
+    }
     console.log(movieName)
 
+    
 
+
+
+
+    // Grab the movieName which will always be the third node argument.
+
+    
+    // Then run a request to the OMDB API with the movie specified
+    var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+    // "http://www.omdbapi.com/?t=titanic&y=&plot=short&apikey=trilogy"
+    // This line is just to help us debug against the actual URL.
+    console.log(queryUrl);
+    
+    request(queryUrl, function(error, response, body) {
+    
+      // If the request is successful
+      if (!error && response.statusCode === 200) {
+    
+        // Parse the body of the site and recover just the imdbRating
+        // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
+       console.log(JSON.parse(response.body));
+       console.log(JSON.parse(body).Title);
+       console.log(JSON.parse(body).Year);
+       console.log(JSON.parse(body).Ratings[0]);
+       console.log(JSON.parse(body).Ratings[1]);
+       console.log(JSON.parse(body).Country);
+       console.log(JSON.parse(body).Language);
+       console.log(JSON.parse(body).Plot);
+       console.log(JSON.parse(body).Actors);
+    //    console.log(JSON.parse(response.body.title))
+      }
+    });
+};
 // for (var i = 2; i <process.argv.length; i++) {
 //     if (i === 2) {
 //         movieName +=process.argv[i];
@@ -142,66 +182,32 @@ function movieThis(movieName){
 
 
     // "http://www.omdbapi.com/?t=titanic&y=&plot=short&apikey=trilogy"
-    var queryURL = "http://www.omdbapi.com/?t=" + movieName + "?api_key=trilogy";
-	request(queryURL, function(error, response, body) {
+    
 
-  	// If there were no errors and the response code was 200 (i.e. the request was successful)...
-  	if (!error && response.statusCode === 200) {
+////////////////////////////////////////////////////// Concert: //////////////////////////////////////////////////////////////////////////////
+    function concertThis(concert) {
+    var concert = process.argv.slice(3);
+    if (process.argv.slice(3) === {}); {
+    concert = defaultConcert;
+    }
+    console.log(concert)
 
-      console.log(title)
-	    console.log(JSON.parse(body));
-        
-        
-      }
-        
-    });
-	    //Get the Movie ID
-        
-	    //console.log(movieID);
+var queryUrlTwo = "https://rest.bandsintown.com/artists/" + concert + "/events?app_id=codingbootcamp";
+console.log(queryUrlTwo);
 
+    request(queryUrlTwo, function(error, response, body) { 
+        if (!error && response.statusCode === 200) {
+            console.log(JSON.parse(response.body));
+            console.log(JSON.parse(body));
+            console.log(JSON.parse(response.body).lineup);
 
-      
-	    //Create new query using the movie ID
-	  
+        }// console logs end.
+    }) // Request(QueryUrlTwo, function(error, response, body) { end
+    } // function concertThis(concert) end
+// "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
+// "https://rest.bandsintown.com/artists/seal/events?app_id=codingbootcamp"
 
-	    // request(queryURL, function(error, response, body) {
-	    // 	var movieObj = JSON.parse(body);
-
-	    // 	console.log("--------Title-----------");
-	    // 	console.log(body.title);
-
-	    // 	console.log("--------Year -----------");
-	    // 	console.log(movieObj.release_date);
-
-	   	// 	console.log("--------Rating-----------");
-	   	// 	console.log(movieObj.rating);
-
-	   	// 	console.log("--------Country Produced-----------");
-	   	// 	for(i=0, j = movieObj.production_countries.length; i<j; i++){
-	   	// 		console.log(movieObj.production_countries[i].name);
-	   	// 	}
-	   	// 	console.log("--------Languages-----------");
-	   	// 	for(i=0, j = movieObj.spoken_languages.length; i<j; i++){
-	   	// 		console.log(movieObj.spoken_languages[i].name);
-	   	// 	}
-	   	// 	console.log("--------Plot----------------");
-	   	// 	console.log(movieObj.overview);
-
-	   	// 	console.log("--------Actors-----------");
-	   	// 	for(i=0, j = movieObj.credits.cast.length; i<j; i++){
-	   	// 		console.log(movieObj.credits.cast[i].name);
-	   	// 	}
-	    	
-	    // }); // end tag for the request query url
-
-
-
-
-
-}
-
-
-
+////////////////////////////////////////////////////// Do what it says: //////////////////////////////////////////////////////////////////////////////
 // Create the do what it says command.
 function doWhatItSays(){
 	fs.readFile("random.txt", "utf8", function(err, data){
