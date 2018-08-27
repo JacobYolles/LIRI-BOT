@@ -5,12 +5,13 @@
   "main": "keys.js",
   "dependencies": {
     "dotenv": "^6.0.0",
-    "fs": "0.0.1-security",
+    "fs": "^0.0.1-security",
     "keys": "^0.1.2",
     "moment": "^2.22.2",
     "node-spotify-api": "^1.0.7",
     "request": "^2.88.0",
-    "spotify": "^0.3.0"
+    "spotify": "^0.3.0",
+    "spotify-api": "^0.0.0"
   },
   "devDependencies": {},
   "scripts": {
@@ -18,13 +19,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JacobYolles/liri-node-app"
+    "url": "git+https://github.com/JacobYolles/LIRI-BOT.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JacobYolles/liri-node-app/issues"
+    "url": "https://github.com/JacobYolles/LIRI-BOT/issues"
   },
-  "homepage": "https://github.com/JacobYolles/liri-node-app#readme"
+  "homepage": "https://github.com/JacobYolles/LIRI-BOT#readme"
 }

@@ -8,6 +8,7 @@ var Spotify = require('node-spotify-api');;  // Spotify
 var request = require("request"); // Movies
 var fs = require("fs"); // File Structure
 var keys = require("./keys.js");    // Keys file for all consumer and secret keys.
+
 var spotify = new Spotify(keys.spotify);
 
 
@@ -218,7 +219,11 @@ function doWhatItSays(){
 
 		var dataArr = data.split(",");
 
-		processCommands(dataArr[0], dataArr[1]);
+        if ({}) {
+            fs.readFile("random.txt", "utf8")
+        }
+
+		processCommands(dataArr[0], dataArr[1], dataArr[2]);
 	});
 }
 
