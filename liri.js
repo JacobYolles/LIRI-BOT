@@ -4,21 +4,21 @@
 
 require("dotenv").config();
 // var inquirer = require("inquirer");
-var spotify = require("spotify");  // Spotify
+var Spotify = require('node-spotify-api');;  // Spotify
 var request = require("request");  // Movies
 var fs = require("fs"); // File Structure
 var keys = require("./keys.js");    // Keys file for all consumer and secret keys.
-
+var spotify = new Spotify(keys.spotify);
 
 
 
 ////////////////////////////////////////////////////////// Creating all requires:(Variables)////////////////////////////////////////////////////
 var inputCommand = process.argv[2]; // This is the switch function to initate what it is the user wants to do function wise. AKA Spotify etc.
-var commandParam = process.arv[3];  // This is the specific function or song part that the user wants after they are inside the application.
+var commandParam = process.argv[3];  // This is the specific function or song part that the user wants after they are inside the application.
 var defaultMovie = "Ghostbusters"
 var defaultSong = "Kiss from a rose"
-var defaultConcert = "Neil Diamond"
-var spotify = new Spotify(keys.spotify);
+// var defaultConcert = "Neil Diamond"
+
 
 // var undefined = undefined
 
@@ -80,21 +80,32 @@ switch(command){
 
 }// end tag for the function command from process commands.
 
-
+// spotify.search({ type: 'track', query: 'dancing in the moonlight' }, function(err, data) {
+//     if ( err ) {
+//         console.log('Error occurred: ' + err);
+//         return;
+//     }
+ 
+//     // Do something with 'data'
+// });
 
 function spotifyThisSong(song) {
+    var song = process.argv.slice(3);
     // First setting a variable for if the user skips or doesn't enter a song to be my default of Seals' kiss from a rose song.
     if (song === "") {
-        song = "Kiss from a rose";
+        song = "Kiss+from+a+rose";
     } // end tag for the first if.
 
+    
     spotify.search({ type: "track", query: song}, function(err, data) {
+        
         if (err) {
             console.log("Error occurred: " + err);
             return;
         }
-    
+      
         var song = data.tracks.items[0];
+ 
         console.log("------Artists-----");
         for(i=0; i<song.artists.length; i++){
             console.log(song.artists[i].name);
@@ -113,61 +124,80 @@ function spotifyThisSong(song) {
 
 }// end tag for the function spotifythis song command.
 
+
+////////////////////////////////////////////////////// MOVIE: //////////////////////////////////////////////////////////////////////////////
 //Create the movie command
 function movieThis(movieName){
+    movieName = process.argv.slice(3);
+    console.log(movieName)
 
-	console.log(movieName);
 
-	request("https://api.themoviedb.org/3/search/movie?api_key=trilogy" + tmdbKey + "&query=" + movieName, function(error, response, body) {
+// for (var i = 2; i <process.argv.length; i++) {
+//     if (i === 2) {
+//         movieName +=process.argv[i];
+//     } else {
+//         movieName =+ "+" +process.argv[i] 
+//      }
+// }
+
+
+    // "http://www.omdbapi.com/?t=titanic&y=&plot=short&apikey=trilogy"
+    var queryURL = "http://www.omdbapi.com/?t=" + movieName + "?api_key=trilogy";
+	request(queryURL, function(error, response, body) {
 
   	// If there were no errors and the response code was 200 (i.e. the request was successful)...
   	if (!error && response.statusCode === 200) {
 
-	    //console.log(JSON.parse(body));
-	    
+      console.log(title)
+	    console.log(JSON.parse(body));
+        
+        
+      }
+        
+    });
 	    //Get the Movie ID
-	    var movieID =  JSON.parse(body).results[0].id;
+        
 	    //console.log(movieID);
 
+
+      
 	    //Create new query using the movie ID
-	    var queryURL = "https://api.themoviedb.org/3/movie/" + movieID + "?api_key=trilogy" + tmdbKey + "&append_to_response=credits,releases";
+	  
 
-	    request(queryURL, function(error, response, body) {
-	    	var movieObj = JSON.parse(body);
+	    // request(queryURL, function(error, response, body) {
+	    // 	var movieObj = JSON.parse(body);
 
-	    	console.log("--------Title-----------");
-	    	console.log(movieObj.original_title);
+	    // 	console.log("--------Title-----------");
+	    // 	console.log(body.title);
 
-	    	console.log("--------Year -----------");
-	    	console.log(movieObj.release_date.substring(0,4));
+	    // 	console.log("--------Year -----------");
+	    // 	console.log(movieObj.release_date);
 
-	   		console.log("--------Rating-----------");
-	   		console.log(movieObj.releases.countries[0].certification);
+	   	// 	console.log("--------Rating-----------");
+	   	// 	console.log(movieObj.rating);
 
-	   		console.log("--------Country Produced-----------");
-	   		for(i=0, j = movieObj.production_countries.length; i<j; i++){
-	   			console.log(movieObj.production_countries[i].name);
-	   		}
-	   		console.log("--------Languages-----------");
-	   		for(i=0, j = movieObj.spoken_languages.length; i<j; i++){
-	   			console.log(movieObj.spoken_languages[i].name);
-	   		}
-	   		console.log("--------Plot----------------");
-	   		console.log(movieObj.overview);
+	   	// 	console.log("--------Country Produced-----------");
+	   	// 	for(i=0, j = movieObj.production_countries.length; i<j; i++){
+	   	// 		console.log(movieObj.production_countries[i].name);
+	   	// 	}
+	   	// 	console.log("--------Languages-----------");
+	   	// 	for(i=0, j = movieObj.spoken_languages.length; i<j; i++){
+	   	// 		console.log(movieObj.spoken_languages[i].name);
+	   	// 	}
+	   	// 	console.log("--------Plot----------------");
+	   	// 	console.log(movieObj.overview);
 
-	   		console.log("--------Actors-----------");
-	   		for(i=0, j = movieObj.credits.cast.length; i<j; i++){
-	   			console.log(movieObj.credits.cast[i].name);
-	   		}
+	   	// 	console.log("--------Actors-----------");
+	   	// 	for(i=0, j = movieObj.credits.cast.length; i<j; i++){
+	   	// 		console.log(movieObj.credits.cast[i].name);
+	   	// 	}
 	    	
-	    });
+	    // }); // end tag for the request query url
 
 
-  	}else{
-  		console.log(error);
-  	}
 
-	});
+
+
 }
 
 
