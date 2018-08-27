@@ -17,7 +17,7 @@ var spotify = new Spotify(keys.spotify);
 var inputCommand = process.argv[2]; // This is the switch function to initate what it is the user wants to do function wise. AKA Spotify etc.
 var commandParam = process.argv[3];  // This is the specific function or song part that the user wants after they are inside the application.
 var defaultMovie = "Mr+Nobody"
-var defaultSong = "Kiss from a rose"
+var defaultSong = "I Want It That Way"
 var defaultConcert = "Seal"
 // var defaultConcert = "Neil Diamond"
 

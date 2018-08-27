@@ -11,7 +11,7 @@
     "node-spotify-api": "^1.0.7",
     "request": "^2.88.0",
     "spotify": "^0.3.0",
-    "spotify-api": "^0.0.0"
+    "spotify-api": "0.0.0"
   },
   "devDependencies": {},
   "scripts": {
